@@ -35,7 +35,7 @@ public class PlayerGameTest {
         match.addRoll(new Roll(5, match.getPlayer("one")));
         PlayerGame playerGame = new PlayerGame(match, "one");
         assertEquals(1,playerGame.getFrames().length);
-        assertEquals(9,playerGame.getFrames()[0].getScoring());
+        assertEquals(9,playerGame.getFrames()[0].getScoring().getPoints());
     }
 }
 

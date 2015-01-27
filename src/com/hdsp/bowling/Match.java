@@ -28,10 +28,11 @@ public class Match {
 
     public Roll[] getRolls(String playerName){
         Player player = getPlayer(playerName);
+        List<Roll> playerRolls = new ArrayList<>();
         for (Roll roll : rolls)
             if (roll.getPlayer() == player)
-                return new Roll[] {roll};
-        return new Roll[0];
+                playerRolls.add(roll);
+        return rolls.toArray(new Roll[rolls.size()]);
     }
 }
 
