@@ -2,7 +2,6 @@ package com.hdsp.bowling;
 
 public class Roll {
     private final int pins;
-    private Roll nextRoll;
     private final Player player;
 
     public Roll(int pins, Player player) {
@@ -12,14 +11,6 @@ public class Roll {
 
     public int getPins() {
         return pins;
-    }
-
-    public Roll getNextRoll() {
-        return nextRoll;
-    }
-
-    public void setNextRoll(Roll nextRoll) {
-        this.nextRoll = nextRoll;
     }
 
     public Player getPlayer() {

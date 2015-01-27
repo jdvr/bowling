@@ -13,7 +13,14 @@ public class Match {
     }
 
     public void addRoll(Roll roll){
-        this.rolls.get(rolls.size() - 1).setNextRoll(roll);
         rolls.add(roll);
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public List<Roll> getRolls() {
+        return rolls;
     }
 }
