@@ -1,12 +1,12 @@
 package com.hdsp.bowling;
 
 public class Roll {
-    private final int pins;
     private final Player player;
+    private final int pins;
 
-    public Roll(int pins, Player player) {
-        this.pins = pins;
+    public Roll(Player player, int pins) {
         this.player = player;
+        this.pins = pins;
     }
 
     public int getPins() {
