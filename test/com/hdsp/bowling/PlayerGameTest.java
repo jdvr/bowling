@@ -16,7 +16,7 @@ public class PlayerGameTest {
     @Test
     public void withOneRoll() throws Exception {
         Match match = createMatch();
-        match.addRoll(new Roll(match.getPlayer("one"), 4));
+        match.addRolls(4).toPlayer("one");
         PlayerGame playerGame = new PlayerGame(match, "one");
         assertEquals(1,playerGame.getFrames().length);
         assertNull(playerGame.getFrames()[0].getScoring());
@@ -25,8 +25,7 @@ public class PlayerGameTest {
     @Test
     public void withTwoRolls() throws Exception {
         Match match = createMatch();
-        match.addRoll(new Roll(match.getPlayer("one"), 4));
-        match.addRoll(new Roll(match.getPlayer("one"), 5));
+        match.addRolls(4, 5).toPlayer("one");
         PlayerGame playerGame = new PlayerGame(match, "one");
         assertEquals(1,playerGame.getFrames().length);
         assertEquals(9,playerGame.getFrames()[0].getScoring().getPoints());
@@ -34,8 +33,7 @@ public class PlayerGameTest {
     @Test
     public void withOtherTwoRolls() {
         Match match = createMatch();
-        match.addRoll(new Roll(match.getPlayer("one"), 1));
-        match.addRoll(new Roll(match.getPlayer("one"), 4));
+        match.addRolls(1, 4).toPlayer("one");
         PlayerGame playerGame = new PlayerGame(match, "one");
         assertEquals(1,playerGame.getFrames().length);
         assertEquals(5, playerGame.getFrames()[0].getScoring().getPoints());
@@ -43,18 +41,52 @@ public class PlayerGameTest {
 
     @Test
     public void withThreeRolls() {
-        Match match = createMatch().addRolls(1, 4, 3).toPlayer("one");
-        match.addRoll(new Roll(match.getPlayer("one"), 1));
-        match.addRoll(new Roll(match.getPlayer("one"), 4));
-        match.addRoll(new Roll(match.getPlayer("one"), 3));
+        Match match = createMatch();
+        match.addRolls(1, 4, 3).toPlayer("one");
         PlayerGame playerGame = new PlayerGame(match, "one");
         assertEquals(2,playerGame.getFrames().length);
+        assertNotNull(playerGame.getFrames()[0].getScoring());
         assertEquals(5,playerGame.getFrames()[0].getScoring().getPoints());
         assertNull(playerGame.getFrames()[1].getScoring());
     }
 
-    private void createPlayerGame(String playerName, int... pins) {
+    @Test
+    public void withStrike() throws Exception {
+        Match match = createMatch();
+        match.addRolls(10,5).toPlayer("one");
+        PlayerGame playerGame = new PlayerGame(match, "one");
+        assertEquals(2, playerGame.getFrames().length);
+        assertNull(playerGame.getFrames()[0].getScoring());
+        assertNull(playerGame.getFrames()[1].getScoring());
+    }
 
+    @Test
+    public void withStrikeAndTwoMoreRolls() throws Exception {
+        Match match = createMatch();
+        match.addRolls(10,5,3).toPlayer("one");
+        PlayerGame playerGame = new PlayerGame(match, "one");
+        assertEquals(2, playerGame.getFrames().length);
+        assertEquals(18, playerGame.getFrames()[0].getScoring().getPoints());
+        assertEquals(26, playerGame.getFrames()[1].getScoring().getPoints());
+    }
+
+    @Test
+    public void withSpare() throws Exception {
+        Match match = createMatch();
+        match.addRolls(5,5).toPlayer("one");
+        PlayerGame playerGame = new PlayerGame(match, "one");
+        assertEquals(1, playerGame.getFrames().length);
+        assertNull(playerGame.getFrames()[0].getScoring());
+    }
+
+    @Test
+    public void withSpareAndOneMoreRoll() throws Exception {
+        Match match = createMatch();
+        match.addRolls(5,5,5).toPlayer("one");
+        PlayerGame playerGame = new PlayerGame(match, "one");
+        assertEquals(2,playerGame.getFrames().length);
+        assertEquals(15, playerGame.getFrames()[0].getScoring().getPoints());
+        assertNull(playerGame.getFrames()[1].getScoring());
     }
 
     private Match createMatch() {
@@ -63,6 +95,8 @@ public class PlayerGameTest {
         match.addPlayer(new Player("two"));
         return match;
     }
+
+
 }
 
 

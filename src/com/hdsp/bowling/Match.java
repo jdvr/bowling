@@ -6,14 +6,11 @@ import java.util.List;
 public class Match {
     private final List<Player> players;
     private final List<Roll> rolls;
+    private List<Roll> noPlayerRolls = new ArrayList<>();
 
     public Match() {
         this.players = new ArrayList<>();
         this.rolls = new ArrayList<>();
-    }
-
-    public void addRoll(Roll roll) {
-        rolls.add(roll);
     }
 
     public void addPlayer(Player player) {
@@ -34,7 +31,28 @@ public class Match {
                 rolls.add(roll);
         return this.rolls.toArray(new Roll[this.rolls.size()]);
     }
+
+    public AddRollTask addRolls(final int... pinsOfRolls) {
+        return new AddRollTask() {
+            @Override
+            public void toPlayer(String name) {
+                for (int pinsOfRoll : pinsOfRolls) {
+                    rolls.add(new Roll(getPlayer(name), pinsOfRoll));
+                }
+            }
+        };
+    }
+
+    public interface AddRollTask {
+        void toPlayer(String name);
+    }
 }
+
+
+
+
+
+
 
 
 

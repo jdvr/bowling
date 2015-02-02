@@ -19,10 +19,30 @@ public class PlayerGame {
     }
 
     private List<PlayerFrame> buildFrames(Roll[] rolls) {
-        List<PlayerFrame> frames = new ArrayList<>();
-        for (int i = 0; i < rolls.length; i += 2)
-            frames.add(new PlayerFrame(rolls, i));
-        return frames;
+        return new FrameBuilder(rolls).build();
     }
+
+    private class FrameBuilder {
+        private final Roll[] rolls;
+
+        public FrameBuilder(Roll[] rolls) {
+            this.rolls = rolls;
+        }
+
+        public List<PlayerFrame> build() {
+            List<PlayerFrame> frames = new ArrayList<>();
+            PlayerFrame frame = null;
+            for (int index = 0; index < rolls.length; index += stepFrom(index)) {
+                frame = new PlayerFrame(frame, rolls, index);
+                frames.add(frame);
+            }
+            return frames;
+        }
+
+        private int stepFrom(int index) {
+            return new PlayerFrame(null, rolls, index).getNumberOfRolls();
+        }
+    }
+
 
 }
