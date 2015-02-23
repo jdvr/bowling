@@ -1,5 +1,7 @@
 package com.hdsp.bowling;
 
+import java.util.Arrays;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,14 +25,14 @@ public class PlayerGameTest {
 
     @Test
     public void withOneRoll() throws Exception {
-        match.addRolls(4).toPlayer("one");
+        match.addRolls(Arrays.asList(4)).toPlayer("one");
         PlayerGame playerGame = new PlayerGame(match, "one");
         assertEquals(1, playerGame.getFrames().length);
         assertNull(playerGame.getFrames()[0].getScoring());
     }
     @Test
     public void withTwoRolls() throws Exception {
-        match.addRolls(4, 5).toPlayer("one");
+        match.addRolls(Arrays.asList(4, 5)).toPlayer("one");
         PlayerGame playerGame = new PlayerGame(match, "one");
         assertEquals(1, playerGame.getFrames().length);
         assertEquals(9,playerGame.getFrames()[0].getScoring().getPoints());
@@ -38,7 +40,7 @@ public class PlayerGameTest {
 
     @Test
     public void withOtherTwoRolls() {
-        match.addRolls(1, 4).toPlayer("one");
+        match.addRolls(Arrays.asList(1, 4)).toPlayer("one");
         PlayerGame playerGame = new PlayerGame(match, "one");
         assertEquals(1, playerGame.getFrames().length);
         assertEquals(5, playerGame.getFrames()[0].getScoring().getPoints());
@@ -46,7 +48,7 @@ public class PlayerGameTest {
 
     @Test
     public void withThreeRolls() {
-        match.addRolls(1, 4, 3).toPlayer("one");
+        match.addRolls(Arrays.asList(1, 4, 3)).toPlayer("one");
         PlayerGame playerGame = new PlayerGame(match, "one");
         assertEquals(2, playerGame.getFrames().length);
         assertNotNull(playerGame.getFrames()[0].getScoring());
@@ -56,7 +58,7 @@ public class PlayerGameTest {
 
     @Test
     public void withStrike() throws Exception {
-        match.addRolls(10,5).toPlayer("one");
+        match.addRolls(Arrays.asList(10, 5)).toPlayer("one");
         PlayerGame playerGame = new PlayerGame(match, "one");
         assertEquals(2, playerGame.getFrames().length);
         assertNull(playerGame.getFrames()[0].getScoring());
@@ -65,7 +67,7 @@ public class PlayerGameTest {
 
     @Test
     public void withStrikeAndTwoMoreRolls() throws Exception {
-        match.addRolls(10,5,3).toPlayer("one");
+        match.addRolls(Arrays.asList(10, 5, 3)).toPlayer("one");
         PlayerGame playerGame = new PlayerGame(match, "one");
         assertEquals(2, playerGame.getFrames().length);
         assertEquals(18, playerGame.getFrames()[0].getScoring().getPoints());
@@ -74,7 +76,7 @@ public class PlayerGameTest {
 
     @Test
     public void withSpare() throws Exception {
-        match.addRolls(5,5).toPlayer("one");
+        match.addRolls(Arrays.asList(5, 5)).toPlayer("one");
         PlayerGame playerGame = new PlayerGame(match, "one");
         assertEquals(1, playerGame.getFrames().length);
         assertNull(playerGame.getFrames()[0].getScoring());
@@ -82,7 +84,7 @@ public class PlayerGameTest {
 
     @Test
     public void withSpareAndOneMoreRoll() throws Exception {
-        match.addRolls(5,5,5).toPlayer("one");
+        match.addRolls(Arrays.asList(5, 5, 5)).toPlayer("one");
         PlayerGame playerGame = new PlayerGame(match, "one");
         assertEquals(2, playerGame.getFrames().length);
         assertEquals(15, playerGame.getFrames()[0].getScoring().getPoints());
@@ -91,7 +93,7 @@ public class PlayerGameTest {
 
     @Test
     public void withTwelveStrikes() throws Exception{
-        match.addRolls(10,10,10,10,10,10,10,10,10,10,10,10).toPlayer("one");
+        match.addRolls(Arrays.asList(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10)).toPlayer("one");
         PlayerGame playerGame = new PlayerGame(match, "one");
         assertEquals(10,playerGame.getFrames().length);
         assertEquals(30, playerGame.getFrames()[0].getScoring().getPoints());
@@ -108,7 +110,7 @@ public class PlayerGameTest {
 
     @Test
     public void rewardTest() throws Exception{
-        match.addRolls(10,9,1,5,5,7,2,10,10,10,9,0,8,2,9,1,10).toPlayer("one");
+        match.addRolls(Arrays.asList(10, 9, 1, 5, 5, 7, 2, 10, 10, 10, 9, 0, 8, 2, 9, 1, 10)).toPlayer("one");
         PlayerGame playerGame = new PlayerGame(match, "one");
         assertEquals(10,playerGame.getFrames().length);
         assertEquals(20, playerGame.getFrames()[0].getScoring().getPoints());

@@ -4,6 +4,7 @@ package com.hdsp.bowling;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class PlayerGame {
 
@@ -16,7 +17,7 @@ public class PlayerGame {
     }
 
     public PlayerFrame[] getFrames() {
-        return buildFrames(match.getRolls(playerName)).toArray(new PlayerFrame[0]);
+        return buildFrames(match.getRolls(playerName)).parallelStream().toArray(PlayerFrame[]::new);
     }
 
     private List<PlayerFrame> buildFrames(Roll[] rolls) {
@@ -34,11 +35,13 @@ public class PlayerGame {
         public List<PlayerFrame> build() {
             List<PlayerFrame> frames = new ArrayList<>();
             PlayerFrame frame = PlayerFrame.Empty;
+
             for (int index = 0; index < rolls.length; index += frame.getNumberOfRolls()) {
                 frame = new PlayerFrame(frame, rollsFrom(index));
                 frames.add(frame);
                 if (frames.size() == MaxNumberOfFrames) break;
             }
+
             return frames;
         }
 

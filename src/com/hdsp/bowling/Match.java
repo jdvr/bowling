@@ -6,7 +6,6 @@ import java.util.List;
 public class Match {
     private final List<Player> players;
     private final List<Roll> rolls;
-    private List<Roll> noPlayerRolls = new ArrayList<>();
 
     public Match() {
         this.players = new ArrayList<>();
@@ -18,33 +17,24 @@ public class Match {
     }
 
     public Player getPlayer(String name) {
-        for (Player player : players)
-            if (player.getId().equals(name)) return player;
-        return null;
+        return players.parallelStream()
+                .filter(player -> player.getName().equals(name))
+                .findFirst()
+                .orElse(null);
     }
 
     public Roll[] getRolls(String playerName){
-        Player player = getPlayer(playerName);
-        List<Roll> rolls = new ArrayList<>();
-        for (Roll roll : this.rolls)
-            if (roll.getPlayer() == player)
-                rolls.add(roll);
-        return this.rolls.toArray(new Roll[this.rolls.size()]);
+        return rolls.parallelStream().filter((roll) -> roll.getPlayer().getName().equals(playerName)).toArray(Roll[]::new);
     }
 
-    public AddRollTask addRolls(final int... pinsOfRolls) {
-        return new AddRollTask() {
-            @Override
-            public void toPlayer(String name) {
-                for (int pinsOfRoll : pinsOfRolls) {
-                    rolls.add(new Roll(getPlayer(name), pinsOfRoll));
-                }
-            }
-        };
+    public AddRollTask addRolls(final List<Integer> pinsOfRolls) {
+        return (name) ->
+            pinsOfRolls.forEach((pinsOfRoll) ->  rolls.add(new Roll(getPlayer(name), pinsOfRoll)));
+
     }
 
     public interface AddRollTask {
-        void toPlayer(String name);
+        public void toPlayer(String name);
     }
 }
 

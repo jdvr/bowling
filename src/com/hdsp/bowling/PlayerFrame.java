@@ -1,8 +1,5 @@
 package com.hdsp.bowling;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class PlayerFrame {
 
     public static final PlayerFrame Empty = emptyFrame();

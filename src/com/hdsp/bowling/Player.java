@@ -1,13 +1,13 @@
 package com.hdsp.bowling;
 
 public class Player {
-    private final String id;
+    private final String name;
 
-    public Player(String id) {
-        this.id = id;
+    public Player(String name) {
+        this.name = name;
     }
 
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 }
